@@ -1,23 +1,39 @@
-def import_answer(filename='answer.csv'):
-    answer = {}
+import csv
+
+def import_answer(filename):
+    answer = []
     try:
         with open(filename, 'r') as new_file:
-             reader= csv.reader(new_file)
-            for line in new_file:
-                answer.append(line.strip().split(','))
-            return answer
+            reader = csv.reader(new_file)
+            import_data = list(reader)
+            header = import_data[0]
+            import_data.pop(0)
+            for line in import_data:
+                dict_temp = {}
+                for i in range(len(header)):
+                    dict_temp[header[i]] = line[i]
+                answer.append(dict_temp)
+    except FileNotFoundError:
+        print('File not found')
+    return answer
+
+def import_question(filename):
+    question = []
+    try:
+        with open(filename, 'r') as new_file:
+            reader = csv.reader(new_file)
+            import_data = list(reader)
+            header = import_data[0]
+            import_data.pop(0)
+            for line in import_data:
+                dict_temp = {}
+                for i in range(len(header)):
+                    dict_temp[header[i]] = line[i]
+                question.append(dict_temp)
     except FileNotFoundError:
         print('File not found')
 
-def import_question(filename='question.csv'):
-    question = []
-    try:
-        with open(filename, 'a+') as new_file:
-            for line in new_file.readlines():
-                question.append(line.strip().split(','))
-            return question
-    except FileNotFoundError:
-        print('File not found')
+    return question
 
 def export_answer(answer, filename='answer.csv'):
     try:
