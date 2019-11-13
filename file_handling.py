@@ -3,7 +3,7 @@ def import_answer(filename='answer.csv'):
     try:
         with open(filename, 'r') as new_file:
              reader= csv.reader(new_file)
-            for line in new_file.readlines():
+            for line in new_file:
                 answer.append(line.strip().split(','))
             return answer
     except FileNotFoundError:
