@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+<body>
+<p>Add question</p>
+<br>
+<form action='{{url_for("add_question")}}' method="POST">
+    <div>
+        <label for="title">Title</label>
+        <textarea id="title" cols="50" rows="2" name="title"></textarea>
+        <br>
+        <label for="message">To resolve</label>
+        <textarea id="message" cols="50" rows="20" name="message"></textarea>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+
+</body>
+</html>

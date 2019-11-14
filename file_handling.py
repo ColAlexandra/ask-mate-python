@@ -1,7 +1,8 @@
 import csv
 
-def import_answer(filename):
-    answer = []
+
+def import_file(filename):
+    list_dict = []
     try:
         with open(filename, 'r') as new_file:
             reader = csv.reader(new_file)
@@ -12,41 +13,19 @@ def import_answer(filename):
                 dict_temp = {}
                 for i in range(len(header)):
                     dict_temp[header[i]] = line[i]
-                answer.append(dict_temp)
+                list_dict.append(dict_temp)
     except FileNotFoundError:
         print('File not found')
-    return answer
+    return list_dict
 
-def import_question(filename):
-    question = []
+
+def export_file(filename, list_dict):
     try:
-        with open(filename, 'r') as new_file:
-            reader = csv.reader(new_file)
-            import_data = list(reader)
-            header = import_data[0]
-            import_data.pop(0)
-            for line in import_data:
-                dict_temp = {}
-                for i in range(len(header)):
-                    dict_temp[header[i]] = line[i]
-                question.append(dict_temp)
-    except FileNotFoundError:
+        with open(filename, 'w') as csvfile:
+            title_list = list(list_dict[0])
+            writer = csv.DictWriter(csvfile, fieldnames=title_list)
+            writer.writeheader()
+            for data in list_dict:
+                writer.writerow(data)
+    except PermissionError:
         print('File not found')
-
-    return question
-
-def export_answer(answer, filename='answer.csv'):
-    try:
-        with open(filename,'a+') as new_file:
-            for line in answer:
-                new_file.write(','.join(line) + '\r\n')
-    except PermissionError:
-        print('No permission')
-
-def export_question(question, filename='question.csv'):
-    try:
-        with open(filename,'a+') as new_file:
-            for line in question:
-                new_file.write(','.join(line) + '\r\n')
-    except PermissionError:
-        print('No permission')

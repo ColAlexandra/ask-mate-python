@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+    <style>
+		td {
+			border: 1px solid #999;
+			padding: 0.1em 1em;
+		}
+	</style>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><strong>{{question['title']}}</strong></td>
+            </tr>
+            <tr>
+                <td>{{question['message']}}</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        {%for answer in answers%}
+        <table>
+            <tr>
+                <td>{{answer['message']}}</td>
+            </tr>
+        </table>
+        {%endfor%}
+    </div>
+
+</body>
+</html>

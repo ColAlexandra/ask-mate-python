@@ -11,17 +11,24 @@
 	</style>
 </head>
 <body>
-<h1>List question</h1>
-{% for question in questions %}
-    <table>
-        <tr>
-            <td><strong>{{question['title']}}</strong></td>
-        </tr>
-        <tr>
-            <td>{{question['message']}}</td>
-        </tr>
-    </table>
+    <h1>List question</h1>
     <br>
-{% endfor %}
+    <div><button type="button"><a href={{url_for('add_question')}}> Add question</a></button>
+    </div>
+    <br>
+    <div>
+        {% for question in questions %}
+        <table>
+            <tr>
+
+                <td><strong><a href={{ url_for('display_question', question_id = question['id'] ) }}>{{question['title']}}</a></strong></td>
+            </tr>
+            <tr>
+                <td>{{question['message']}}</td>
+            </tr>
+        </table>
+        <br>
+        {% endfor %}
+    </div>
 </body>
 </html>
