@@ -10,13 +10,17 @@
 <form action='{{url_for("add_question")}}' method="POST">
     <div>
         <label for="title">Title</label>
+        <br>
         <textarea id="title" cols="50" rows="2" name="title"></textarea>
         <br>
         <label for="message">To resolve</label>
+        <br>
         <textarea id="message" cols="50" rows="20" name="message"></textarea>
     </div>
     <button type="submit">Save</button>
 </form>
+<br>
+<button type="button"><a href="{{url_for('list_page')}}">Main page</a></button>
 
 
 </body>

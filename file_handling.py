@@ -19,7 +19,21 @@ def import_file(filename):
     return list_dict
 
 
-def export_file(filename, list_dict):
+def export_file(list_dict):
+    filename = 'sample_data/question.csv'
+    try:
+        with open(filename, 'w') as csvfile:
+            title_list = list(list_dict[0])
+            writer = csv.DictWriter(csvfile, fieldnames=title_list)
+            writer.writeheader()
+            for data in list_dict:
+                writer.writerow(data)
+    except PermissionError:
+        print('File not found')
+
+
+def export_ans(list_dict):
+    filename = 'sample_data/answer.csv'
     try:
         with open(filename, 'w') as csvfile:
             title_list = list(list_dict[0])

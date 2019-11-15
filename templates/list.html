@@ -21,7 +21,7 @@
         <table>
             <tr>
 
-                <td><strong><a href={{ url_for('display_question', question_id = question['id'] ) }}>{{question['title']}}</a></strong></td>
+                <td><strong><a href="{{ url_for('display_question', question_id = question['id'] ) }}">{{question['title']}}</a></strong></td>
             </tr>
             <tr>
                 <td>{{question['message']}}</td>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New answer</title>
+</head>
+<body>
+    <div>
+        <form action="{{url_for('add_answer', question_id = question_id ) }}" method="POST">
+
+        <label for="message">Answer</label>
+            <br>
+            <textarea id="message" cols="50" rows="20" name="message"></textarea>
+            <br>
+            <button type="submit">Save answer</button>
+            <input type="hidden" value="{{question_id}}" name="question_id">
+        </form>
+    </div>
+    <br>
+        <button type="button"><a href="{{url_for('list_page')}}">Main page</a></button>
+    </div>
+</body>
+</html>

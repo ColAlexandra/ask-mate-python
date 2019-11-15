@@ -16,6 +16,7 @@ def new_dictionary(title, message):
     question = questions[0]
     headers = [key for key, values in question.items()]
     new_dict = {}
+    new_id = new_id_question()
     for header in headers:
         new_dict[header] = 0
     for key, values in new_dict.items():
@@ -24,13 +25,35 @@ def new_dictionary(title, message):
         if key == 'title':
             new_dict[key] = title
         if key == 'id':
-            new_dict[key] = new_id_question()
+            new_dict[key] = new_id
     return new_dict
 
 
-def add_dict_to_list_question():
+def add_dict_to_list_question(title, message):
     list_dict = data_manager.question_list()
-    new_dict = new_dictionary()
+    new_dict = new_dictionary(title, message)
+    list_dict.append(new_dict)
+    return list_dict
+
+
+def new_dictionary_ans(message, question_id):
+    answers = data_manager.answer_list()
+    answer = answers[0]
+    headers = [key for key, values in answer.items()]
+    new_dict = {}
+    for header in headers:
+        new_dict[header] = 0
+    for key, values in new_dict.items():
+        if key == 'message':
+            new_dict[key] = message
+        if key == 'question_id':
+            new_dict[key] = question_id
+    return new_dict
+
+
+def add_dict_to_list_answer(message, question_id):
+    list_dict = data_manager.answer_list()
+    new_dict = new_dictionary_ans(message, question_id)
     list_dict.append(new_dict)
     return list_dict
 
@@ -56,10 +79,10 @@ def new_id_question():
     id_list = []
     for question in questions:
         for id in question['id']:
-            id_list.append(id)
+            id_list.append(int(id))
+
     for i in range(len(sorted(id_list))):
         if i not in id_list:
-            return str(i)
+            return i
 
-    return str(len(id_list))
-
+    return len(id_list)
