@@ -1,5 +1,9 @@
 import file_handling
-import util
+
+
+
+
+
 
 
 def question_list():
@@ -18,3 +22,5 @@ def answer_list():
 # def export_answer(list_dict):
 #     file_handling.file_export(filename='sample_data/answer.csv', list_dict)
 
+#tutaj funkcje a propos question i answer
+#tutaj zapisanie przy funkcji z utli przeniesionej

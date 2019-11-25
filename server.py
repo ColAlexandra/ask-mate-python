@@ -21,7 +21,7 @@ def add_question():
         message = request.form['message']
         list_dict = util.add_dict_to_list_question(title, message)
         file_handling.export_file(list_dict)
-        return render_template('add.html', list_dict=list_dict)
+        return redirect(url_for('list_page'))
 
 
 @app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
@@ -33,7 +33,7 @@ def add_answer(question_id):
         question_id = request.form['question_id']
         list_dict = util.add_dict_to_list_answer(message, question_id)
         file_handling.export_ans(list_dict)
-        return render_template('new_answer.html', list_dict=list_dict, question_id=question_id)
+        return redirect(url_for('display_question', question_id=question_id))
 
 
 @app.route('/question/<question_id>')
