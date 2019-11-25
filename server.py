@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for
 import data_manager
 import util
-import file_handling
 
 app = Flask(__name__)
 
@@ -19,8 +18,7 @@ def add_question():
     elif request.method == 'POST':
         title = request.form['title']
         message = request.form['message']
-        list_dict = util.add_dict_to_list_question(title, message)
-        file_handling.export_file(list_dict)
+        data_manager.export_to_file_question(title, message)
         return redirect(url_for('list_page'))
 
 
@@ -31,15 +29,14 @@ def add_answer(question_id):
     elif request.method == 'POST':
         message = request.form['message']
         question_id = request.form['question_id']
-        list_dict = util.add_dict_to_list_answer(message, question_id)
-        file_handling.export_ans(list_dict)
+        data_manager.export_to_file_answer(message, question_id)
         return redirect(url_for('display_question', question_id=question_id))
 
 
 @app.route('/question/<question_id>')
 def display_question(question_id):
-    question = util.choose_question(question_id)
-    answers = util.choose_answer(question_id)
+    question = data_manager.choose_question(question_id)
+    answers = data_manager.choose_answer(question_id)
     return render_template('question.html', question=question, answers=answers, question_id=question_id)
 
 
