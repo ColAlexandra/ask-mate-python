@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def list_page():
-    questions = data_manager.list_a_question()
+    questions = data_manager.all_question_list()
     return render_template('list.html', questions = questions)
 
 
@@ -22,7 +22,7 @@ def add_question():
         return redirect(url_for('list_page'))
 
 
-@app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
+@app.route('/question/<int:question_id>/new_answer', methods=['POST', 'GET'])
 def add_answer(question_id):
     if request.method == 'GET':
         return render_template('new_answer.html', question_id=question_id)
@@ -33,7 +33,7 @@ def add_answer(question_id):
         return redirect(url_for('display_question', question_id=question_id))
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<int:question_id>')
 def display_question(question_id):
     question = data_manager.choose_question(question_id)
     answers = data_manager.choose_answer(question_id)
