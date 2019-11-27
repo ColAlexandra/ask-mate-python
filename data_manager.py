@@ -1,24 +1,70 @@
 import file_handling
 
 
+@file_handling.connection_handler
+def all_question_list(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                    ORDER BY id ASC                    
+                    """)
+    question = cursor.fetchall()
+    return question
+
+# def question_list():
+#     question = file_handling.import_file(filename='sample_data/question.csv')
+#     return question
+
+@file_handling.connection_handler
+def all_answer_list(cursor):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    ORDER BY id ASC    
+    """)
+    answer = cursor.fetchall()
+    return answer
+
+# def answer_list():
+#     answer = file_handling.import_file(filename='sample_data/answer.csv')
+#     return answer
+# @file_handling.connection_handler
+
+# def export_to_file_question(cursor, ):
+#     cursor.execute("""
+#                     INSERT INTO question (title, message)
+#                     VALUES (title, message)
+#     """)
+
+
 def export_to_file_question(title, message):
     list_dict = add_dict_to_list_question(title, message)
     file_handling.export_file(list_dict)
 
 
+# @file_handling.connection_handler
+# def export_to_file_question(cursor, message, question_id):
+#     cursor.execute("""
+#                     INSERT INTO question (message, question_id)
+#                     VALUES (message, question_id)
+#     """)
+
 def export_to_file_answer(message, question_id):
     list_dict = add_dict_to_list_answer(message, question_id)
     file_handling.export_ans(list_dict)
 
+@file_handling.connection_handler
+def list_a_question(cursor):
+    # questions = question_list()
+    # for question in questions:
+    #     id = question['id']
+    #     title = question['title']
+    #     message = question['message']
+    cursor.execute("""
+                    SELECT id, title, message FROM question
+    """)
+    tuple_question = cursor.fetchall()
 
-def list_a_question():
-    questions = question_list()
+    return tuple_question
 
-    for question in questions:
-        id = question['id']
-        title = question['title']
-        message = question['message']
-        return id, title, message
 
 
 def new_dictionary(title, message):
@@ -97,15 +143,6 @@ def new_id_question():
 
     return len(id_list)
 
-
-def question_list():
-    question = file_handling.import_file(filename='sample_data/question.csv')
-    return question
-
-
-def answer_list():
-    answer = file_handling.import_file(filename='sample_data/answer.csv')
-    return answer
 
 
 # def export_questions(list_dict):

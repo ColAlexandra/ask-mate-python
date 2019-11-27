@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def list_page():
-    questions = data_manager.question_list()
+    questions = data_manager.list_a_question()
     return render_template('list.html', questions = questions)
 
 
