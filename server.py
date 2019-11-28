@@ -40,6 +40,20 @@ def display_question(question_id):
     return render_template('question.html', question=question, answers=answers, question_id=question_id)
 
 
+@app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
+def update_question(question_id):
+    question_choose = data_manager.choose_question(question_id)
+    print(question_id)
+    if request.method == 'GET':
+        return render_template('update.html', question_id=question_id, question_choose=question_choose)
+    elif request.method == 'POST':
+        title = request.form['title']
+        message = request.form['message']
+        question = data_manager.update_question(question_id, title, message)
+        return redirect(url_for('display_question', question_id=question_id, question=question))
+
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

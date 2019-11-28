@@ -19,8 +19,14 @@ def all_answer_list(cursor):
                     ORDER BY id ASC    
     """)
     answer = cursor.fetchall()
-    print(answer)
     return answer
+
+
+@file_handling.connection_handler
+def update_question(cursor, question_id, title, message):
+    sql = 'UPDATE question SET title = %(title)s, message = %(message)s WHERE id = %(id)s'
+    values = {'title': title, 'message': message, 'id': question_id}
+    cursor.execute(sql, values)
 
 
 @file_handling.connection_handler
@@ -32,7 +38,6 @@ def export_to_file_question(cursor, title, message):
 
 @file_handling.connection_handler
 def export_to_file_answer(cursor, message, question_id):
-    print('id export', question_id)
     sql = 'INSERT INTO answer(message, question_id) VALUES (%(message)s, %(question_id)s) '
     values = {'message': message, 'question_id': question_id}
     cursor.execute(sql, values)

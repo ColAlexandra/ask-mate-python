@@ -31,6 +31,7 @@
         </table>
         {%endfor%}
     </div>
+    <p><button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button> </p>
     <p><button type="submit"><a href="{{url_for('add_answer', question_id = question['id'] ) }}">Add answer</a></button></p>
     <p><button type="submit"><a href="{{url_for('list_page')}}">Main page</a></button></p>
 
