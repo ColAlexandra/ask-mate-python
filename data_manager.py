@@ -30,6 +30,13 @@ def update_question(cursor, question_id, title, message):
 
 
 @file_handling.connection_handler
+def edit_answer(cursor, answer_id, message):
+    sql = 'UPDATE answer SET message = %(message)s WHERE id = %(answer_id)s'
+    values = {'message': message, 'answer_id': answer_id}
+    cursor.execute(sql,values)
+
+
+@file_handling.connection_handler
 def export_to_file_question(cursor, title, message):
     sql = 'INSERT INTO question(title, message) VALUES (%(title)s, %(message)s) '
     values = {'title': title, 'message': message}
@@ -82,6 +89,12 @@ def choose_question(cursor, question_id):
     question = cursor.fetchone()
     return question
 
+
+@file_handling.connection_handler
+def show_answer(cursor, answer_id):
+    cursor.execute("""SELECT * FROM answer WHERE id = %(answer_id)s""", {'answer_id': answer_id})
+    answer = cursor.fetchone()
+    return answer
 
 # def answer_list(): #przekazac w slowniku
 #     answer = file_handling.import_file(filename='sample_data/answer.csv')

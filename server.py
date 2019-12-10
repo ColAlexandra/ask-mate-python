@@ -43,7 +43,6 @@ def display_question(question_id):
 @app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
 def update_question(question_id):
     question_choose = data_manager.choose_question(question_id)
-    print(question_id)
     if request.method == 'GET':
         return render_template('update.html', question_id=question_id, question_choose=question_choose)
     elif request.method == 'POST':
@@ -52,6 +51,27 @@ def update_question(question_id):
         question = data_manager.update_question(question_id, title, message)
         return redirect(url_for('display_question', question_id=question_id, question=question))
 
+
+@app.route('/answer/<answer_id>/')
+def display_answer(answer_id):
+    answer = data_manager.show_answer(answer_id)
+    return render_template('answer.html', answer=answer, answer_id=answer_id)
+
+
+@app.route('/answer/<answer_id>/edit/', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    answer = data_manager.show_answer(answer_id)
+    if request.method == 'GET':
+        return render_template('edit.html', answer_id=answer_id, answer=answer)
+    elif request.method == 'POST':
+        message = request.form['message']
+        answer = data_manager.edit_answer(answer_id, message)
+        return redirect(url_for('display_answer', answer_id=answer_id, answer=answer))
+
+
+@app.route('/answer/<answer_id>/new-comment')
+def add_comment_to_answer(answer_id):
+    pass
 
 
 if __name__ == '__main__':

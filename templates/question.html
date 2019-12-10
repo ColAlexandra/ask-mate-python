@@ -11,8 +11,9 @@
 	</style>
 </head>
 <body>
-    <div>
-        <table>
+<div>
+    <p><b>QUESTION</b></p>
+    <table>
             <tr>
                 <td><strong>{{question['title']}}</strong></td>
             </tr>
@@ -20,19 +21,21 @@
                 <td>{{question['message']}}</td>
             </tr>
         </table>
-    </div>
+    <button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button>
+</div>
     <br>
     <div>
+        <p><b>ANSWER</b></p>
         {%for answer in answers%}
         <table>
             <tr>
-                <td>{{answer['message']}}</td>
+                <td><a href ={{url_for('display_answer', answer_id = answer['id'])}}>{{answer['message']}}</a></td>
             </tr>
         </table>
         {%endfor%}
     </div>
-    <p><button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button> </p>
     <p><button type="submit"><a href="{{url_for('add_answer', question_id = question['id'] ) }}">Add answer</a></button></p>
+    <br>
     <p><button type="submit"><a href="{{url_for('list_page')}}">Main page</a></button></p>
 
 </body>
