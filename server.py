@@ -37,7 +37,8 @@ def add_answer(question_id):
 def display_question(question_id):
     question = data_manager.choose_question(question_id)
     answers = data_manager.choose_answer(question_id)
-    return render_template('question.html', question=question, answers=answers, question_id=question_id)
+    comments =data_manager.show_comments_to_question(question_id)
+    return render_template('question.html', question=question, answers=answers, comments=comments, question_id=question_id)
 
 
 @app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
@@ -52,13 +53,14 @@ def update_question(question_id):
         return redirect(url_for('display_question', question_id=question_id, question=question))
 
 
-@app.route('/answer/<answer_id>/')
+@app.route('/answer/<int:answer_id>/')
 def display_answer(answer_id):
     answer = data_manager.show_answer(answer_id)
-    return render_template('answer.html', answer=answer, answer_id=answer_id)
+    comments = data_manager.show_comments_to_answer(answer_id)
+    return render_template('answer.html', answer=answer, answer_id=answer_id, comments=comments)
 
 
-@app.route('/answer/<answer_id>/edit/', methods=['GET', 'POST'])
+@app.route('/answer/<int:answer_id>/edit/', methods=['GET', 'POST'])
 def edit_answer(answer_id):
     answer = data_manager.show_answer(answer_id)
     if request.method == 'GET':
@@ -69,9 +71,62 @@ def edit_answer(answer_id):
         return redirect(url_for('display_answer', answer_id=answer_id, answer=answer))
 
 
-@app.route('/answer/<answer_id>/new-comment')
+@app.route('/question/<int:question_id>/delete')
+def delete_question(question_id):
+    data_manager.remove_question(question_id)
+    return redirect('/')
+
+
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id):
+    data_manager.remove_chosen_answer(answer_id)
+    return redirect('/')
+
+
+@app.route('/answer/<int:answer_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_answer(answer_id):
-    pass
+    if request.method == 'GET':
+        return render_template('new-comment.html', answer_id=answer_id)
+    elif request.method == 'POST':
+        message = request.form['message']
+        answer_id = request.form['answer_id']
+        data_manager.export_to_file_comment_answer(answer_id, message)
+        return redirect(url_for('display_answer', answer_id=answer_id))
+
+
+@app.route('/question/<int:question_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_question(question_id):
+    if request.method == 'GET':
+        return render_template(url_for('new-comment.html', question_id=question_id))
+    elif request.method == 'POST':
+        message = request.form['message_question']
+        question_id = request.form['question_id']
+        data_manager.export_to_file_comment_question(question_id, message)
+        return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/question/<question_id>/vote_up')
+def vote_up_question(question_id):
+    data_manager.update_vote_question(question_id)
+    return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/question/<question_id>/vote_down')
+def vote_down_question(question_id):
+    data_manager.update_lower_question(question_id)
+    return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/answer/<answer_id>/vote_up')
+def vote_up_answer(answer_id):
+    data_manager.update_vote_answer(answer_id)
+    return redirect(url_for('display_answer', answer_id=answer_id))
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def vote_down_answer(answer_id):
+    data_manager.update_lower_answer(answer_id)
+    return redirect(url_for('display_answer', answer_id=answer_id))
 
 
 if __name__ == '__main__':

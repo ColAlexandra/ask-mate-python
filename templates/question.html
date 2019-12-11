@@ -20,9 +20,26 @@
             <tr>
                 <td>{{question['message']}}</td>
             </tr>
+            <tr>
+                <td>{{question['vote_number']}}</td>
+            </tr>
+            <tr>
+                <td><button type="submit"><a href="{{url_for('vote_up_question', question_id = question.id)}}">Good</a></button>
+                <button type="submit"><a href="{{url_for('vote_down_question', question_id = question.id)}}">Bad</a></button></td>
+            </tr>
         </table>
-    <button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button>
+    <p><button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button></p>
+    <p><a href="{{ url_for('delete_question', question_id=question['id']) }}"><button onclick="return confirm('Are you sure?')">Delete question</button></a></p>
 </div>
+    <p><strong>Comments</strong></p>
+    <table>
+        {%for comment in comments%}
+        <tr>
+            <td>{{comment['message']}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    <button type="submit"><a href="{{url_for('add_comment_to_question', question_id=question['id'])}}">Add comment</a></button>
     <br>
     <div>
         <p><b>ANSWER</b></p>
@@ -31,12 +48,19 @@
             <tr>
                 <td><a href ={{url_for('display_answer', answer_id = answer['id'])}}>{{answer['message']}}</a></td>
             </tr>
+            <tr>
+                {%if answer.vote_number == None%}
+                <td>No votes</td>
+                {%elif answer.vote_number != None%}
+                <td>{{answer.vote_number}}</td>
+                {%endif%}
+            </tr>
         </table>
         {%endfor%}
     </div>
+
     <p><button type="submit"><a href="{{url_for('add_answer', question_id = question['id'] ) }}">Add answer</a></button></p>
     <br>
     <p><button type="submit"><a href="{{url_for('list_page')}}">Main page</a></button></p>
-
 </body>
 </html>
