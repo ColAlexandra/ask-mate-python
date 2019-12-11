@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def list_page():
     questions = data_manager.all_question_list()
-    return render_template('list.html', questions = questions)
+    return render_template('list.html', questions=questions)
 
 
 @app.route('/add', methods=['POST', 'GET'])
@@ -127,6 +127,13 @@ def vote_up_answer(answer_id):
 def vote_down_answer(answer_id):
     data_manager.update_lower_answer(answer_id)
     return redirect(url_for('display_answer', answer_id=answer_id))
+
+
+@app.route('/search')
+def search_matching_questions():
+    search_phrase = request.args['search']
+    search_result = data_manager.search_question(search_phrase)
+    return render_template('search.html', search_result=search_result)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Searching result</title>
+</head>
+<body>
+    {%for result in search_result%}
+    <p>{{result['title']}}</p>
+    <p>{{result['message']}}</p>
+    {%endfor%}
+
+</body>
+</html>

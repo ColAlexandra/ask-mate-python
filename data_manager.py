@@ -10,9 +10,9 @@ def all_question_list(cursor):
 
 @file_handling.connection_handler
 def all_answer_list(cursor):
-    cursor.execute("""SELECT * FROM answer ORDER BY id ASC""")
-    answer = cursor.fetchall()
-    return answer
+    cursor.execute("""SELECT * FROM answer JOIN question ON answer.question_id=question_id""")
+    answers = cursor.fetchall()
+    return answers
 
 
 @file_handling.connection_handler
@@ -187,3 +187,12 @@ def update_lower_answer(cursor, answer_id):
     sql = 'UPDATE answer SET vote_number=%(vote_up)s WHERE id = %(answer_id)s'
     values = {'vote_up': vote_up, 'answer_id': answer_id}
     cursor.execute(sql, values)
+
+
+@file_handling.connection_handler
+def search_question(cursor, search_phrase):
+    search_phrase = f'%{search_phrase.lower()}%'
+    cursor.execute("""SELECT * FROM question WHERE LOWER(message) LIKE %(search_phrase)s OR LOWER(title) LIKE %(search_phrase)s""", {'search_phrase': search_phrase})
+    search_result = cursor.fetchall()
+    return search_result
+

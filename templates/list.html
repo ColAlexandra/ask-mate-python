@@ -12,6 +12,12 @@
 </head>
 <body>
     <h1>List question</h1>
+    <div class="search">
+    <form action="{{url_for('search_matching_questions', method='get')}}">
+            <label for="search"></label>
+            <input name="search" id="search" placeholder="Search...">
+    </form>
+    </div>
     <br>
     <div><button type="button"><a href={{url_for('add_question')}}> Add question</a></button>
     </div>
@@ -27,11 +33,12 @@
                 <td>{{question['message']}}</td>
             </tr>
             <tr>
-                <td>{{question.vote_number}}</td>
+                <td>Votes: {{question.vote_number}}</td>
             </tr>
+
         </table>
         <br>
-        {% endfor %}
+        {%endfor%}
     </div>
 </body>
 </html>
