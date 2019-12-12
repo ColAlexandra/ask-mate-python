@@ -136,6 +136,25 @@ def search_matching_questions():
     return render_template('search.html', search_result=search_result)
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template(register.html)
+    if request.method == 'POST':
+        username = request.form('username')
+        password = request.form('password')
+        password2 = request.form('password')
+
+        if util.user_name_exist(username):
+            return render_template('register.html', message="The username already exist")
+        if password != password2:
+            return render_template('register.html', message='Two passwords don\'t match each other')
+        else:
+            hash_password = util.hash_password(password)
+            data_manager.register_user(username, hash_password)
+            return redirect('/')
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

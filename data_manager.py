@@ -196,3 +196,14 @@ def search_question(cursor, search_phrase):
     search_result = cursor.fetchall()
     return search_result
 
+
+@file_handling.connection_handler
+def register_user(cursor, username, hash_password):
+    cursor.execute("""INSERT INTO users VALUES (%(username)s, %(hash_password)s)""", {'username': username, 'hash_password': hash_password})
+
+
+@file_handling.connection_handler
+def get_hashed_password(cursor, username):
+    cursor.execute("""SELECT hash_password FROM users WHERE username = %(username)s""", {'username': username})
+    hashed_password = cursor.fetchone()
+    return (hashed_password['hash_password'])
