@@ -1,14 +1,20 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, session, escape
+import os
 import data_manager
 import util
 
 app = Flask(__name__)
 
+app.secret_key = os.urandom(10)
+
 
 @app.route('/')
 def list_page():
+    username = None
+    if 'username' in session:
+        username = session['username']
     questions = data_manager.all_question_list()
-    return render_template('list.html', questions=questions)
+    return render_template('list.html', questions=questions, username=username)
 
 
 @app.route('/add', methods=['POST', 'GET'])
@@ -97,7 +103,7 @@ def add_comment_to_answer(answer_id):
 @app.route('/question/<int:question_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_question(question_id):
     if request.method == 'GET':
-        return render_template(url_for('new-comment.html', question_id=question_id))
+        return render_template('new-comment.html', question_id=question_id)
     elif request.method == 'POST':
         message = request.form['message_question']
         question_id = request.form['question_id']
@@ -136,16 +142,16 @@ def search_matching_questions():
     return render_template('search.html', search_result=search_result)
 
 
-@app.route('/registration', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template(register.html)
+        return render_template('register.html')
     if request.method == 'POST':
-        username = request.form('username')
-        password = request.form('password')
-        password2 = request.form('password')
+        username = request.form['username']
+        password = request.form['password']
+        password2 = request.form['password2']
 
-        if util.user_name_exist(username):
+        if data_manager.username_exist(username):
             return render_template('register.html', message="The username already exist")
         if password != password2:
             return render_template('register.html', message='Two passwords don\'t match each other')
@@ -153,6 +159,29 @@ def register():
             hash_password = util.hash_password(password)
             data_manager.register_user(username, hash_password)
             return redirect('/')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login(invalid_login=False):
+    if request.method == 'GET':
+        return render_template('login.html', invalid_login=invalid_login)
+    elif request.method == 'POST':
+        username = request.form['username']
+        text_password = request.form['text_password']
+
+        if data_manager.username_exist(username):
+            hashed_password = data_manager.get_hashed_password(username)
+            if util.verify_password(text_password, hashed_password):
+                session['username'] = username
+                return redirect('/')
+            else:
+                return render_template('login.html', message='Incorrect login or password, try again', invalid_login = True)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
 
 if __name__ == '__main__':

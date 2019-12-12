@@ -12,6 +12,12 @@
 </head>
 <body>
     <h1>List question</h1>
+    {%if username%}
+    <p>Login as {{username}}<button type="submit"><a href="{{url_for('logout')}}">Logout</a></button> </p>
+
+    {%else%}
+    <p><button type="submit"><a href="{{url_for('register')}}">Register</a></button><button type="submit"><a href="{{url_for('login', invalid_login=invalid_login)}}">Login</a></button> </p>
+    {%endif%}
     <div class="search">
     <form action="{{url_for('search_matching_questions', method='get')}}">
             <label for="search"></label>

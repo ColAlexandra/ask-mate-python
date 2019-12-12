@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    {%if answer_id >= 0%}
+    {%if answer_id  %}
     <form action="{{url_for('add_comment_to_answer', answer_id=answer_id)}}" method="post">
         <label for="message">Your comment</label>
         <br><textarea id="message" cols="50" rows="20" name="message"></textarea>
@@ -14,8 +14,8 @@
         <br>
         <button type="submit">Save comment</button>
     </form>
-    {%elif question_id >= 0%}
-    <form action="{{url_for('add_comment_to_question', question_id=question_id)}}" method="post">
+    {%elif question_id %}
+    <form action="" method="post">
         <label for="message_question">Your comment</label>
         <br><textarea id="message_question" cols="50" rows="20" name="message_question"></textarea>
         <input type="hidden" value="{{question_id}}" name="question_id">
