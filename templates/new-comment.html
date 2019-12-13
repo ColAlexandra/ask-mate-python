@@ -14,8 +14,8 @@
         <br>
         <button type="submit">Save comment</button>
     </form>
-    {%elif question_id %}
-    <form action="" method="post">
+    {%else%}
+    <form action="{{url_for('add_comment_to_question', question_id=question_id)}}" method="post">
         <label for="message_question">Your comment</label>
         <br><textarea id="message_question" cols="50" rows="20" name="message_question"></textarea>
         <input type="hidden" value="{{question_id}}" name="question_id">

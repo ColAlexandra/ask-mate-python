@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/question.css')}}">
     <title>Question</title>
-    <style>
-		td {
-			border: 1px solid #999;
-			padding: 0.1em 1em;
-		}
-	</style>
 </head>
 <body>
 <div>
-    <p><b>QUESTION</b></p>
-    <table>
+    <table class="question_table">
+            <tr>
+                <th>Question</th>
+            </tr>
             <tr>
                 <td><strong>{{question['title']}}</strong></td>
             </tr>
@@ -21,7 +18,7 @@
                 <td>{{question['message']}}</td>
             </tr>
             <tr>
-                <td>{{question['vote_number']}}</td>
+                <td>Number of votes: {{question['vote_number']}}</td>
             </tr>
             <tr>
                 <td><button type="submit"><a href="{{url_for('vote_up_question', question_id = question.id)}}">Good</a></button>
@@ -31,8 +28,11 @@
     <p><button type="submit"><a href="{{url_for('update_question', question_id = question['id'], title = question['title'], message = question['message'])}}">Update question</a></button></p>
     <p><a href="{{ url_for('delete_question', question_id=question['id']) }}"><button onclick="return confirm('Are you sure?')">Delete question</button></a></p>
 </div>
-    <p><strong>Comments</strong></p>
-    <table>
+
+    <table class="question_table">
+        <tr>
+                <th>Comments</th>
+        </tr>
         {%for comment in comments%}
         <tr>
             <td>{{comment['message']}}</td>
@@ -41,10 +41,13 @@
     </table>
     <button type="submit"><a href="{{url_for('add_comment_to_question', question_id=question['id'])}}">Add comment</a></button>
     <br>
+    <br>
     <div>
-        <p><b>ANSWER</b></p>
         {%for answer in answers%}
-        <table>
+        <table class="question_table">
+            <tr>
+                <th>Answer</th>
+            </tr>
             <tr>
                 <td><a href ={{url_for('display_answer', answer_id = answer['id'])}}>{{answer['message']}}</a></td>
             </tr>
@@ -59,7 +62,7 @@
         {%endfor%}
     </div>
 
-    <p><button type="submit"><a href="{{url_for('add_answer', question_id = question['id'] ) }}">Add answer</a></button></p>
+    <button type="submit"><a href="{{url_for('add_answer', question_id = question['id'] ) }}">Add answer</a></button>
     <br>
     <p><button type="submit"><a href="{{url_for('list_page')}}">Main page</a></button></p>
 </body>

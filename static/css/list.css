@@ -1,0 +1,106 @@
+*{font-family: Oswald}
+
+body{ font-family: Oswald;
+    color: #CC4B27;
+    background-image: url("../img/desktop-2325627_1920.jpg");
+    height: 90%;
+    width: 90%;
+
+}
+
+.button{
+    background-color: #A0F6CF;
+    color: black;
+    padding: 7px 15px;
+    text-align: center;
+    font-size: 18px;
+    margin: 2px 1px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    position:absolute;
+    top: 40px;
+    right: 100px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.70),0 17px 50px 0 rgba(0,0,0,0.65);
+    font-family: Oswald;
+
+}
+
+.buttonlogin{
+    background-color: #A0F6CF;
+    color: black;
+    padding: 7px 15px;
+    text-align: center;
+    font-size: 18px;
+    margin: 2px 1px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    position:absolute;
+    top: 40px;
+    right: 220px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.70),0 17px 50px 0 rgba(0,0,0,0.65);
+    font-family: Oswald;
+}
+.add_question{
+    background-color: #A0F6CF;
+    color: black;
+    padding: 7px 15px;
+    text-align: center;
+    font-size: 18px;
+    margin: 2px 1px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    position:absolute;
+    top: 70%;
+    right: 50px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.70),0 17px 50px 0 rgba(0,0,0,0.65);
+    font-family: Oswald;
+
+}
+
+h1{
+    color: black;
+    font-family: Oswald;
+    font-size: 70px;
+    width: 40%;
+    margin-left: 300px;
+    margin-top: 70px;
+    font-weight: bold;
+}
+
+.search{
+    color: black;
+    font-size: 20px;
+    width: 20%;
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    font-family: Oswald;
+
+}
+
+.login{
+    height: 40%;
+    width: 95%;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    font-family: Oswald;
+
+}
+
+td, tr {
+    padding: 5px;
+    color: black;
+    margin-bottom: 3px;
+    border: 3px;
+    font-family: Oswald;
+    font-size: 18px;
+}
+
+
+.question_table tr:nth-child(odd){background-color: #F5E3DC}
+.question_table tr:nth-child(even){background-color: #A0F6CF}
+.question_table tr:hover {background-color: #CE9A9E;}

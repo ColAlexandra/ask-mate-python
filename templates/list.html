@@ -1,50 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/list.css')}}">
 	<title>Ask mate - list</title>
-	<style>
-		td {
-			border: 1px solid #999;
-			padding: 0.1em 1em;
-		}
-	</style>
 </head>
 <body>
-    <h1>List question</h1>
-    {%if username%}
-    <p>Login as {{username}}<button type="submit"><a href="{{url_for('logout')}}">Logout</a></button> </p>
 
+
+<div class="login">
+    <h1>AskMate</h1>
+    <br>
+    {%if username%}
+    <p><b>Welcome {{username}}!</b></p>
+    <p><a href="{{url_for('logout')}}"><button class="button" type="submit">Logout</button></a></p>
     {%else%}
-    <p><button type="submit"><a href="{{url_for('register')}}">Register</a></button><button type="submit"><a href="{{url_for('login', invalid_login=invalid_login)}}">Login</a></button> </p>
+    <p><a href="{{url_for('register')}}"><button class="button" type="submit">Register</button></a>
+        <a href="{{url_for('login', invalid_login=invalid_login)}}">
+            <button class="buttonlogin" type="submit">Login</button></a> </p>
     {%endif%}
-    <div class="search">
+
     <form action="{{url_for('search_matching_questions', method='get')}}">
             <label for="search"></label>
-            <input name="search" id="search" placeholder="Search...">
+            <input class="search" name="search" id="search" placeholder="Search...">
     </form>
     </div>
-    <br>
-    <div><button type="button"><a href={{url_for('add_question')}}> Add question</a></button>
-    </div>
-    <br>
+
     <div>
-        {% for question in questions %}
-        <table>
+        <table class="question_table">
+            {% for question in questions %}
             <tr>
-
-                <td><strong><a href="{{ url_for('display_question', question_id = question['id'] ) }}">{{question['title']}}</a></strong></td>
+                <td>
+                    <strong><a href="{{ url_for('display_question', question_id = question['id'] ) }}">
+                    {{ question['title'] }}</a></strong>
+                </td>
             </tr>
             <tr>
-                <td>{{question['message']}}</td>
+                <td>{{ question['message'] }}</td>
             </tr>
-            <tr>
-                <td>Votes: {{question.vote_number}}</td>
-            </tr>
-
+            {% endfor %}
         </table>
         <br>
-        {%endfor%}
+
     </div>
+    <br>
+    <p><a href={{url_for('add_question')}}><button class="add_question" type="button"> Add new question</button></p></a>
+
 </body>
 </html>

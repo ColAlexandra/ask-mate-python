@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, session, escape
+from flask import Flask, render_template, redirect, request, url_for, session
 import os
 import data_manager
 import util
@@ -174,8 +174,8 @@ def login(invalid_login=False):
             if util.verify_password(text_password, hashed_password):
                 session['username'] = username
                 return redirect('/')
-            else:
-                return render_template('login.html', message='Incorrect login or password, try again', invalid_login = True)
+        else:
+            return render_template('login.html', message='Incorrect login or password, try again', invalid_login=True)
 
 
 @app.route('/logout')
